@@ -1,0 +1,21 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+# Colors
+
+[[plugins]]
+repo = 'skwp/vim-colors-solarized'
+hook_add = '''
+    syntax enable
+    set background=dark
+    colorscheme solarized
+    " colorscheme 設定は source 後に行う必要があるので確実に読まれている VimEnter のタイミングで行う。
+    " 但し Colorscheme イベントの発生が抑制されないよう nented を付ける。
+    au MyAutoCmd VimEnter * nested colorscheme hybrid
+'''
