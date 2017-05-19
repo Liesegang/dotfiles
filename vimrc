@@ -31,19 +31,23 @@ set cursorline                  "Change bg color of current row
 set cursorcolumn                "Change bg color of current column
 
 set list                        "Show invisible chars
-set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮
+set listchars=tab:▸\ ,trail:·,eol:↲,extends:❯,precedes:❮
                                 "Set symbol of invisible chars
 
 set showcmd                     "Show incomplete cmds down the bottom
 set showmode                    "Show current mode down the bottom
 set laststatus=2                "Show status bar tsuneni
 set cmdheight=2                 "Show 2-line message bar 
-set showmatch                   "Emphasize brackets
+set matchpairs& matchpairs+=<:> " 対応括弧に<と>のペアを追加
+set showmatch                   " Emphasize brackets
+set matchtime=1                 " 括弧の対応表示時間[1/10秒]
 set helpheight=999              "Full-screen help window
+set display=uhex                " 表示できない文字を16進数で表示
 
 set gcr=a:blinkon0              "Disable cursor blink
 
 syntax on                       "Turn on syntax highlighting
+set background=dark             "Use dark theme
 
 
 
@@ -106,9 +110,6 @@ nnoremap P P=`]<C-o>
 filetype plugin on
 filetype indent on
 
-" Display tabs and trailing spaces visually
-set list listchars=tab:\ \ ,trail:·
-
 set nowrap       "Don't wrap lines
 set linebreak    "Wrap lines at convenient points
 set breakindent  "Indent wapped text
@@ -170,13 +171,12 @@ endif
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
-  " プラグインリストを収めた TOML ファイル
-  " 予め TOML ファイルを用意しておく
+  " Toml dir which contains plugins list
   let g:rc_dir    = expand('~/.vim/rc')
   let s:toml      = g:rc_dir . '/dein.toml'
   let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
 
-  " TOML を読み込み、キャッシュしておく
+  " Cache toml files
   call dein#load_toml(s:toml,      {'lazy': 0})
   call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
@@ -185,7 +185,7 @@ if dein#load_state(s:dein_dir)
   call dein#save_state()
 endif
 
-" もし、未インストールものものがあったらインストール
+" Install if uninstalled plugin exists
 if dein#check_install()
   call dein#install()
 endif

@@ -1,2 +1,10 @@
 vim/backups
 vim/dein
+zsh/.zprezto
+zsh/.zcompdump
+zsh/.zcompdump.zwc
+zsh/.zhistory
+zsh/.zlogin
+zsh/.zlogout
+zsh/.zprofile
+zsh/.zshenv
