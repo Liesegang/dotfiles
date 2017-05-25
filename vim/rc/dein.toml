@@ -7,9 +7,12 @@ repo = 'itchyny/lightline.vim'
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
 
+[[plugins]]
+repo = 'Shougo/vinarise'
 
 # Colors
-
 [[plugins]]
 repo = 'skwp/vim-colors-solarized'
