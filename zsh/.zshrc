@@ -124,6 +124,12 @@ alias mkdir='mkdir -p'
 
 alias cdb='cd -'
 
+# for ocaml
+alias ocaml='rlwrap ocaml'
+
+# for scheme
+alias scheme='rlwrap scheme'
+
 # sudo の後のコマンドでエイリアスを有効にする
 alias sudo='sudo '
 
