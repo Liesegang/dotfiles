@@ -16,3 +16,7 @@ repo = 'Shougo/vinarise'
 # Colors
 [[plugins]]
 repo = 'skwp/vim-colors-solarized'
+
+# Languages
+[[plugins]]
+repo = 'rust-lang/rust.vim'
