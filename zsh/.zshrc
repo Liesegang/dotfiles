@@ -20,7 +20,7 @@ fi
 ########################################
 # 環境変数
 export LANG=ja_JP.UTF-8
-
+export PATH="${PATH}:${HOME}/.robotech/bin"
 
 # 色を使用出来るようにする
 autoload -Uz colors
@@ -149,8 +149,6 @@ elif which putclip >/dev/null 2>&1 ; then
     # Cygwin
     alias -g C='| putclip'
 fi
-
-
 
 ########################################
 # OS 別の設定
