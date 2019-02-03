@@ -162,6 +162,9 @@ nnoremap <Up>   gk
 nnoremap gj j
 nnoremap gk k
 
+" for NERDTree
+map <C-e> :NERDTreeToggle<CR>
+
 " ================ dein.vim ========================
 
 " directory for plugins

@@ -13,10 +13,32 @@ repo = 'vim-jp/vimdoc-ja'
 [[plugins]]
 repo = 'Shougo/vinarise'
 
+[[plugins]]
+repo = 'thinca/vim-template'
+
+# Utility
+[[plugins]]
+repo = 'Shougo/neocomplcache'
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+
+[[plugins]]
+repo = 'ntpeters/vim-better-whitespace'
+
 # Colors
 [[plugins]]
 repo = 'skwp/vim-colors-solarized'
 
 # Languages
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+
 [[plugins]]
 repo = 'rust-lang/rust.vim'

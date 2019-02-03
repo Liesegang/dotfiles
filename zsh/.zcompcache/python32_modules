@@ -1,0 +1,4 @@
+_python32_modules=( ${(Q)"${(z)$(<<\EO:_python32_modules
+
+EO:_python32_modules
+)}"} )

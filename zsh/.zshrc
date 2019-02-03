@@ -19,8 +19,13 @@ fi
 
 ########################################
 # 環境変数
+source "${HOME}/.env"
 export LANG=ja_JP.UTF-8
 export PATH="${PATH}:${HOME}/.robotech/bin"
+export PATH="/usr/local/opt/opencv@2/bin:$PATH"
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export GOPATH=~/go
+export GOBIN=$GOPATH/bin
 ## for fc command
 export FCEDIT="vim"
 
@@ -134,6 +139,16 @@ alias scheme='rlwrap scheme'
 
 # sudo の後のコマンドでエイリアスを有効にする
 alias sudo='sudo '
+
+# eagle
+alias eagle='/Applications/EAGLE-*/EAGLE.app/Contents/MacOS/EAGLE'
+
+# g++
+alias g++='g++ -std=c++17 -Wall'
+
+# vim
+alias v='vim'
+alias s='subl'
 
 # グローバルエイリアス
 alias -g L='| less'
