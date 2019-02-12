@@ -22,3 +22,5 @@ do
 done
 
 echo $(tput setaf 2)Initialize complete!. ✔︎$(tput sgr0)
+
+exec zsh -l

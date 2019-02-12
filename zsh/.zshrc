@@ -1,33 +1,12 @@
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
-
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-# Customize to your needs...
-
-
-# 少し凝った zshrc
-# License : MIT
-# http://mollifier.mit-license.org/
-
-########################################
 # 環境変数
-source "${HOME}/.env"
 export LANG=ja_JP.UTF-8
 export PATH="${PATH}:${HOME}/.robotech/bin"
-export PATH="/usr/local/opt/opencv@2/bin:$PATH"
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 export GOPATH=~/go
 export GOBIN=$GOPATH/bin
+
 ## for fc command
 export FCEDIT="vim"
+export EDITOR="nvim"
 
 # 色を使用出来るようにする
 autoload -Uz colors
@@ -44,7 +23,7 @@ SAVEHIST=1000000
 
 # 単語の区切り文字を指定する
 autoload -Uz select-word-style
-select-word-style default
+
 # ここで指定した文字は単語区切りとみなされる
 # / も区切りと扱うので、^W でディレクトリ１つ分を削除できる
 zstyle ':zle:*' word-chars " /=;@:{},|"
@@ -77,44 +56,38 @@ setopt print_eight_bit
 
 # beep を無効にする
 setopt no_beep
-
 # フローコントロールを無効にする
 setopt no_flow_control
-
 # Ctrl+Dでzshを終了しない
 setopt ignore_eof
-
 # '#' 以降をコメントとして扱う
 setopt interactive_comments
-
 # ディレクトリ名だけでcdする
 setopt auto_cd
-
 # cd したら自動的にpushdする
 setopt auto_pushd
 # 重複したディレクトリを追加しない
 setopt pushd_ignore_dups
-
 # 同時に起動したzshの間でヒストリを共有する
 setopt share_history
-
 # 同じコマンドをヒストリに残さない
 setopt hist_ignore_all_dups
-
 # スペースから始まるコマンド行はヒストリに残さない
 setopt hist_ignore_space
-
 # ヒストリに保存するときに余分なスペースを削除する
 setopt hist_reduce_blanks
-
 # 高機能なワイルドカード展開を使用する
 setopt extended_glob
+setopt correct
 
 ########################################
 # キーバインド
 
 # ^R で履歴検索をするときに * でワイルドカードを使用出来るようにする
 bindkey '^R' history-incremental-pattern-search-backward
+
+bindkey '^P' history-beginning-search-backward
+bindkey '^N' history-beginning-search-forward
 
 ########################################
 # エイリアス
@@ -130,6 +103,7 @@ alias mv='mv -i'
 alias mkdir='mkdir -p'
 
 alias cdb='cd -'
+alias reload='exec zsh -l'
 
 # for ocaml
 alias ocaml='rlwrap ocaml'
@@ -147,8 +121,8 @@ alias eagle='/Applications/EAGLE-*/EAGLE.app/Contents/MacOS/EAGLE'
 alias g++='g++ -std=c++17 -Wall'
 
 # vim
-alias v='vim'
-alias s='subl'
+alias vv='vim'
+alias ss='subl'
 
 # グローバルエイリアス
 alias -g L='| less'
@@ -181,79 +155,40 @@ case ${OSTYPE} in
         ;;
 esac
 
-# vim:set ft=zsh:
-
+function chpwd() { ls }
+function mkcd() { mkdir -p "$@" && eval cd "\"\$$#\""; }
 
 # for any env
-
 export PATH="$HOME/.anyenv/bin:$PATH"
 eval "$(anyenv init -)"
 
-
 # for prompt setting
-
 autoload -Uz promptinit
 promptinit
-prompt powerline
 
-# for tmux
-function is_exists() { type "$1" >/dev/null 2>&1; return $?; }
-function is_osx() { [[ $OSTYPE == darwin* ]]; }
-function is_screen_running() { [ ! -z "$STY" ]; }
-function is_tmux_runnning() { [ ! -z "$TMUX" ]; }
-function is_screen_or_tmux_running() { is_screen_running || is_tmux_runnning; }
-function shell_has_started_interactively() { [ ! -z "$PS1" ]; }
-function is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
+PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@%{${fg[blue]}%}%m${reset_color}(%*%) %~
+%# "
 
-function tmux_automatically_attach_session()
-{
-    if is_screen_or_tmux_running; then
-        ! is_exists 'tmux' && return 1
+# ls color
+eval `dircolors .dir_colors/dircolors`
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-        if is_tmux_runnning; then
-            echo "${fg_bold[red]} _____ __  __ _   ___  __ ${reset_color}"
-            echo "${fg_bold[red]}|_   _|  \/  | | | \ \/ / ${reset_color}"
-            echo "${fg_bold[red]}  | | | |\/| | | | |\  /  ${reset_color}"
-            echo "${fg_bold[red]}  | | | |  | | |_| |/  \  ${reset_color}"
-            echo "${fg_bold[red]}  |_| |_|  |_|\___//_/\_\ ${reset_color}"
-        elif is_screen_running; then
-            echo "This is on screen."
-        fi
-    else
-        if shell_has_started_interactively && ! is_ssh_running; then
-            if ! is_exists 'tmux'; then
-                echo 'Error: tmux command not found' 2>&1
-                return 1
-            fi
+# for zplug
+source ~/.zplug/init.zsh
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+zplug 'zsh-users/zsh-completions'
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug load
 
-            if tmux has-session >/dev/null 2>&1 && tmux list-sessions | grep -qE '.*]$'; then
-                # detached session exists
-                tmux list-sessions
-                echo -n "Tmux: attach? (y/N/num) "
-                read
-                if [[ "$REPLY" =~ ^[Yy]$ ]] || [[ "$REPLY" == '' ]]; then
-                    tmux attach-session
-                    if [ $? -eq 0 ]; then
-                        echo "$(tmux -V) attached session"
-                        return 0
-                    fi
-                elif [[ "$REPLY" =~ ^[0-9]+$ ]]; then
-                    tmux attach -t "$REPLY"
-                    if [ $? -eq 0 ]; then
-                        echo "$(tmux -V) attached session"
-                        return 0
-                    fi
-                fi
-            fi
 
-            if is_osx && is_exists 'reattach-to-user-namespace'; then
-                # on OS X force tmux's default command
-                # to spawn a shell in the user's namespace
-                tmux_config=$(cat $HOME/.tmux.conf <(echo 'set-option -g default-command "reattach-to-user-namespace -l $SHELL"'))
-                tmux -f <(echo "$tmux_config") new-session && echo "$(tmux -V) created new session supported OS X"
-            else
-                tmux new-session && echo "tmux created new session"
-            fi
-        fi
-    fi
-}
+# git設定
+RPROMPT="%{${fg[blue]}%}[%~]%{${reset_color}%}"
+autoload -Uz vcs_info
+setopt prompt_subst
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
+zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
+zstyle ':vcs_info:*' formats "%F{green}%c%u[%b]%f"
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+precmd () { vcs_info }
+RPROMPT=$RPROMPT'${vcs_info_msg_0_}'

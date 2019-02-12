@@ -9,36 +9,49 @@ set -eu
 # For more information, see etc/README.md
 . "$DOTPATH"/etc/lib/vital.sh
 
-# This script is only supported with OS X
-if ! is_osx; then
-    log_fail "error: this script is only supported with osx"
-    exit 1
-fi
-
 if has "git"; then
-	if ! has "anyenv"; then
-		git clone https://github.com/riywo/anyenv ~/.anyenv
-		log_pass "anyenv: install successfully"
-	else
-		log_pass "anyenv: already installed"
-	fi
+  if ! [ -d "$HOME/.anyenv" ]; then
+    git clone https://github.com/riywo/anyenv ~/.anyenv
+    export PATH="$HOME/.anyenv/bin:$PATH"
+    anyenv install --init
+    log_pass "anyenv: install successfully"
+  else
+    log_pass "anyenv: already installed"
+  fi
+
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
+
+  if ! [ -d "$(anyenv root)/plugins/anyenv-update" ]; then
+    mkdir -p $(anyenv root)/plugins
+    git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv-update
+    log_pass "anyenv-update: install successfully"
+  else
+    log_pass "anyenv-update: already installed"
+  fi
 else
     log_fail "error: require: git"
     exit 1
 fi
 
-anyenv install pyenv -s
-anyenv install rbenv -s
+anyenv install pyenv -s && log_pass "pyenv: install successfully"
+anyenv install rbenv -s && log_pass "rbenv: install successfully"
+
+eval "$(anyenv init -)"
 
 PYTHON3_VER=$(pyenv install -l | grep -E "  3.[^-]*$" | tail -1)
 PYTHON2_VER=$(pyenv install -l | grep -E "  2.[^-]*$" | tail -1)
 
 RUBY_VER=$(rbenv install -l | grep -v - | tail -1)
 
-pyenv install $PYTHON3_VER -s
-pyenv install $PYTHON2_VER -s
+echo $PYTHON3_VER
+echo $PYTHON2_VER
+echo $RUBY_VER
+
+pyenv install $PYTHON3_VER -s && log_pass "python3: install successfully"
+pyenv install $PYTHON2_VER -s && log_pass "python2: install successfully"
 pyenv global $PYTHON3_VER $PYTHON2_VER
 pyenv rehash
 
-rbenv install $RUBY_VER -s
+rbenv install $RUBY_VER -s && log_pass "ruby: install successfully"
 rbenv global $RUBY_VER

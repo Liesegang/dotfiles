@@ -26,7 +26,7 @@ if ! contains "${SHELL:-}" "zsh"; then
 
     if [ -x "$zsh_path" ]; then
         # Changing for a general user
-        if chsh -s "$zsh_path" "${USER:-root}"; then
+        if chsh -s "$zsh_path"; then
             log_pass "Change shell to $zsh_path for ${USER:-root} successfully"
         else
             log_fail "cannot set '$path' as \$SHELL"

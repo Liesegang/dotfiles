@@ -168,7 +168,7 @@ map <C-e> :NERDTreeToggle<CR>
 " ================ dein.vim ========================
 
 " directory for plugins
-let s:dein_dir = expand('~/.vim/dein')
+let s:dein_dir = expand('~/.dein')
 " directory for dein.vim
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 

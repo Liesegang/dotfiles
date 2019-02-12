@@ -11,8 +11,8 @@ set -eu
 
 # This script is only supported with OS X
 if ! is_osx; then
-    log_fail "error: this script is only supported with osx"
-    exit 1
+    log_info "error: this script is only supported with osx"
+    exit 0
 fi
 
 if has "brew"; then

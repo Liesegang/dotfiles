@@ -1,4 +1,0 @@
-all_generators=( ${(Q)"${(z)$(<<\EO:all_generators
-'assets' 'channel' 'controller' 'generator' 'helper' 'integration_test' 'jbuilder' 'job' 'mailer' 'migration' 'model' 'resource' 'scaffold' 'scaffold_controller' 'system_test' 'task' 'js:assets' 'test_unit:generator' 'test_unit:plugin'
-EO:all_generators
-)}"} )
