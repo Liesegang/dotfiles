@@ -16,6 +16,8 @@ set clipboard=unnamed,unnamedplus
 
 set mouse=a                     "Allow mouse
 
+set fileencoding=utf-8
+
 " Change leader to a comma because the backslash is too far away
 " That means all \x commands turn into ,x
 " The mapleader has to be set before vundle starts loading all 
@@ -54,6 +56,7 @@ set background=dark             "Use dark theme
 " ================ Cursor Config ====================
 
 set backspace=indent,eol,start  "Allow backspace in insert mode
+set virtualedit=onemore
 
 
 
@@ -79,6 +82,8 @@ set nobackup
 set nowb
 
 set confirm                     "Confirm unsaved file before close
+
+set fileformats=unix,dos,mac
 
 
 
@@ -124,7 +129,7 @@ set smartcase       " ...unless we type a capital
 set wrapscan        " Back to front on search
 set gdefault        " Use g option as default on replacement
 
-
+nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
 " ================ Folds ============================
 
@@ -136,7 +141,7 @@ set nofoldenable        "dont fold by default
 
 " ================ Completion =======================
 
-set wildmode=list:longest
+set wildmode=list:longest,list:full
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
 set wildignore+=*vim/backups*

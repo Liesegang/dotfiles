@@ -12,9 +12,6 @@ export EDITOR="nvim"
 autoload -Uz colors
 colors
 
-# emacs 風キーバインドにする
-bindkey -v
-
 # ヒストリの設定
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
@@ -79,15 +76,21 @@ setopt hist_reduce_blanks
 # 高機能なワイルドカード展開を使用する
 setopt extended_glob
 setopt correct
+setopt no_flow_control
 
 ########################################
 # キーバインド
+
+# emacs 風キーバインドにする
+bindkey -v
+bindkey -v '^?' backward-delete-char
 
 # ^R で履歴検索をするときに * でワイルドカードを使用出来るようにする
 bindkey '^R' history-incremental-pattern-search-backward
 
 bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
+bindkey '^Q' push-line-or-edit
 
 ########################################
 # エイリアス
@@ -141,6 +144,10 @@ elif which putclip >/dev/null 2>&1 ; then
     alias -g C='| putclip'
 fi
 
+alias ...="../../"
+alias ....="../../../"
+alias .....="../../../../"
+
 ########################################
 # OS 別の設定
 case ${OSTYPE} in
@@ -152,6 +159,7 @@ case ${OSTYPE} in
     linux*)
         #Linux用の設定
         alias ls='ls -F --color=auto'
+        eval `dircolors .dir_colors/dircolors`
         ;;
 esac
 
@@ -170,7 +178,6 @@ PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@%{${fg[blue]}%}%m${
 %# "
 
 # ls color
-eval `dircolors .dir_colors/dircolors`
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # for zplug
@@ -192,3 +199,30 @@ zstyle ':vcs_info:*' formats "%F{green}%c%u[%b]%f"
 zstyle ':vcs_info:*' actionformats '[%b|%a]'
 precmd () { vcs_info }
 RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
+
+
+
+## man zshall
+# zman [search word]
+zman() {
+    if [[ -n $1 ]]; then
+        PAGER="less -g -s '+/"$1"'" man zshall
+        echo "Search word: $1"
+    else
+        man zshall
+    fi
+}
+
+# zsh 用語検索
+# http://qiita.com/mollifier/items/14bbea7503910300b3ba
+zwman() {
+    zman "^       $1"
+}
+
+# zsh フラグ検索
+zfman() {
+    local w='^'
+    w=${(r:8:)w}
+    w="$w${(r:7:)1}|$w$1(\[.*\].*)|$w$1:.*:|$w$1/.*/.*"
+    zman "$w"
+}
