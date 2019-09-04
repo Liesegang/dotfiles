@@ -41,7 +41,7 @@ if has "apt"; then
   # set the icon theme
   gsettings set org.gnome.desktop.interface icon-theme "Paper"
   # or the cursor theme
-  gsettings set org.gnome.desktop.interface cursor-theme "Paper"<Paste>
+  gsettings set org.gnome.desktop.interface cursor-theme "Paper"
 
   # install chrome
   sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
