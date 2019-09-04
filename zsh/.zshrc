@@ -1,5 +1,5 @@
-source ./exports.zsh
-source ./alias.zsh
+source $ZDOTDIR/exports.zsh
+source $ZDOTDIR/alias.zsh
 
 # 色を使用出来るようにする
 autoload -Uz colors
