@@ -56,7 +56,7 @@ if has "apt"; then
   rm -rf ~/gnome-terminal-colors-solarized
   git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git ~/gnome-terminal-colors-solarized
   cd ~/gnome-terminal-colors-solarized
-  echo -e "2\n1\nYES\n1\n" | ./install.sh
+  echo -e "1\n1\nYES\n1\n" | ./install.sh
   rm -rf ~/gnome-terminal-colors-solarized
   cd
 
