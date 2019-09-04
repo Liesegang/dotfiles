@@ -53,9 +53,11 @@ if has "apt"; then
   LANG=C xdg-user-dirs-update --force
 
   sudo apt-get install dconf-cli
-  git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git
-  cd gnome-terminal-colors-solarized
-  echo "1\n1\nYES\n1\n" | ./install.sh
+  rm -rf ~/gnome-terminal-colors-solarized
+  git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git ~/gnome-terminal-colors-solarized
+  cd ~/gnome-terminal-colors-solarized
+  echo -e "2\n1\nYES\n1\n" | ./install.sh
+  rm -rf ~/gnome-terminal-colors-solarized
   cd
 
   # for powerline
