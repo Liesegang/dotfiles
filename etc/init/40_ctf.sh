@@ -28,8 +28,9 @@ if has "apt"; then
   # exgdb
   git clone https://github.com/miyagaw61/exgdb.git ~/.exgdb
   cd ~/.exgdb
-  ./exgdbctl install expeda
-  ./exgdbctl install Pwngdb
+  sudo cp -a ./bin/exgdbctl /usr/local/bin
+  exgdbctl install expeda
+  exgdbctl install Pwngdb
   cd
 else
   log_fail "error: require: apt"
