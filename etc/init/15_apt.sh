@@ -60,6 +60,10 @@ if has "apt"; then
 
   # for powerline
   sudo pip install powerline-shell
+
+
+  # apt autoremove
+  sudo apt autoremove
 else
   log_fail "error: require: apt"
   exit 1
