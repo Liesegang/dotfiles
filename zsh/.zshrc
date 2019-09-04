@@ -1,13 +1,5 @@
-# 環境変数
-export LANG=ja_JP.UTF-8
-export PATH="${PATH}:${HOME}/.robotech/bin"
-export GOPATH=~/go
-export GOBIN=$GOPATH/bin
-export EXGDBDIR=${HOME}/.exgdb
-
-## for fc command
-export FCEDIT="vim"
-export EDITOR="nvim"
+source ./exports.zsh
+source ./alias.zsh
 
 # 色を使用出来るようにする
 autoload -Uz colors
@@ -92,62 +84,6 @@ bindkey '^R' history-incremental-pattern-search-backward
 bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
 bindkey '^Q' push-line-or-edit
-
-########################################
-# エイリアス
-
-alias la='ls -a'
-alias ll='ls -l'
-alias lla='ls -la'
-
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-
-alias mkdir='mkdir -p'
-
-alias cdb='cd -'
-alias reload='exec zsh -l'
-
-# for ocaml
-alias ocaml='rlwrap ocaml'
-
-# for scheme
-alias scheme='rlwrap scheme'
-
-# sudo の後のコマンドでエイリアスを有効にする
-alias sudo='sudo '
-
-# eagle
-alias eagle='/Applications/EAGLE-*/EAGLE.app/Contents/MacOS/EAGLE'
-
-# g++
-alias g++='g++ -std=c++17 -Wall'
-
-# vim
-alias vv='vim'
-alias ss='subl'
-
-# グローバルエイリアス
-alias -g L='| less'
-alias -g G='| grep'
-
-# C で標準出力をクリップボードにコピーする
-# mollifier delta blog : http://mollifier.hatenablog.com/entry/20100317/p1
-if which pbcopy >/dev/null 2>&1 ; then
-    # Mac
-    alias -g C='| pbcopy'
-elif which xsel >/dev/null 2>&1 ; then
-    # Linux
-    alias -g C='| xsel --input --clipboard'
-elif which putclip >/dev/null 2>&1 ; then
-    # Cygwin
-    alias -g C='| putclip'
-fi
-
-alias ...="../../"
-alias ....="../../../"
-alias .....="../../../../"
 
 ########################################
 # OS 別の設定
