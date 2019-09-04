@@ -59,7 +59,7 @@ if has "apt"; then
   cd
 
   # for powerline
-  pip install powerline-shell
+  sudo pip install powerline-shell
 else
   log_fail "error: require: apt"
   exit 1
