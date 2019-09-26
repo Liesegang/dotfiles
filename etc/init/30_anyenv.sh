@@ -10,15 +10,6 @@ set -eu
 . "$DOTPATH"/etc/lib/vital.sh
 
 if has "git"; then
-  if ! [ -d "$HOME/.anyenv" ]; then
-    git clone https://github.com/riywo/anyenv ~/.anyenv
-    export PATH="$HOME/.anyenv/bin:$PATH"
-    anyenv install --init
-    log_pass "anyenv: install successfully"
-  else
-    log_pass "anyenv: already installed"
-  fi
-
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
 
@@ -34,24 +25,38 @@ else
     exit 1
 fi
 
+if ! [ -d "$HOME/.config/anyenv/anyenv-install" ]; then
+  anyenv install --force-init
+fi
+
 anyenv install pyenv -s && log_pass "pyenv: install successfully"
 anyenv install rbenv -s && log_pass "rbenv: install successfully"
+anyenv install nodenv -s && log_pass "nodenv: install successfully"
 
-eval "$(anyenv init -)"
+if ! [ -d "$(pyenv root)"/plugins/xxenv-latest ]; then
+  git clone https://github.com/momo-lab/xxenv-latest.git "$(pyenv root)"/plugins/xxenv-latest
+fi
 
-PYTHON3_VER=$(pyenv install -l | grep -E "  3.[^-]*$" | tail -1)
-PYTHON2_VER=$(pyenv install -l | grep -E "  2.[^-]*$" | tail -1)
+if ! [ -d "$(rbenv root)"/plugins/xxenv-latest ]; then
+  git clone https://github.com/momo-lab/xxenv-latest.git "$(rbenv root)"/plugins/xxenv-latest
+fi
 
-RUBY_VER=$(rbenv install -l | grep -v - | tail -1)
+if ! [ -d "$(nodenv root)"/plugins/xxenv-latest ]; then
+  git clone https://github.com/momo-lab/xxenv-latest.git "$(nodenv root)"/plugins/xxenv-latest
+fi
 
-echo $PYTHON3_VER
-echo $PYTHON2_VER
-echo $RUBY_VER
-
-pyenv install $PYTHON3_VER -s && log_pass "python3: install successfully"
-pyenv install $PYTHON2_VER -s && log_pass "python2: install successfully"
-pyenv global $PYTHON3_VER $PYTHON2_VER
+pyenv latest install -s && log_pass "python3: install successfully"
+pyenv latest install 2 -s && log_pass "python2: install successfully"
+pyenv global $(pyenv latest --print 3) $(pyenv latest --print 2)
 pyenv rehash
 
-rbenv install $RUBY_VER -s && log_pass "ruby: install successfully"
-rbenv global $RUBY_VER
+rbenv latest install -s && log_pass "ruby: install successfully"
+rbenv latest global
+rbenv rehash
+
+nodenv latest install -s && log_pass "nodnev: install successfully"
+nodenv latest global
+nodenv rehash
+
+sudo tlmgr update --self --all
+sudo tlmgr paper a4
