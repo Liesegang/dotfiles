@@ -37,9 +37,11 @@ alias sudo='sudo '
 # g++
 alias g++='g++ -std=c++17 -Wall'
 
-# vim
-alias vv='vim'
+# text editor
+alias vv='nvim'
 alias ss='subl'
+alias vim='nvim'
+alias vi='nvim'
 
 # グローバルエイリアス
 alias -g L='| less'

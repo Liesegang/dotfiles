@@ -62,7 +62,7 @@ if has "apt"; then
   cd
 
   # for powerline
-  sudo pip install powerline-shell
+  sudo pip3 install powerline-shell
 
 
   # apt autoremove

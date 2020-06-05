@@ -9,6 +9,10 @@ set -eu
 # For more information, see etc/README.md
 . "$DOTPATH"/etc/lib/vital.sh
 
+if is_linux && [! -e $HOME/.anyenv ]; then
+  git clone https://github.com/anyenv/anyenv ~/.anyenv
+fi
+
 if has "git"; then
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
@@ -44,6 +48,8 @@ fi
 if ! [ -d "$(nodenv root)"/plugins/xxenv-latest ]; then
   git clone https://github.com/momo-lab/xxenv-latest.git "$(nodenv root)"/plugins/xxenv-latest
 fi
+
+source $HOME/.zshenv
 
 pyenv latest install -s && log_pass "python3: install successfully"
 pyenv latest install 2 -s && log_pass "python2: install successfully"
