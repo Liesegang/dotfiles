@@ -27,7 +27,7 @@ if has "apt"; then
     xz-utils tk-dev libffi-dev liblzma-dev
 
   # install git
-  sudo apt -y install git zsh gawk python-pip
+  sudo apt -y install git zsh gawk python3-pip
 
   # install Neovim
   sudo apt -y install software-properties-common
@@ -36,7 +36,8 @@ if has "apt"; then
   sudo apt -y install neovim
 
   # install Paper icons
-  sudo add-apt-repository -u ppa:snwh/ppa
+  # sudo add-apt-repository ppa:snwh/ppa
+  sudo add-apt-repository "deb http://ppa.launchpad.net/snwh/ppa/ubuntu disco main"
   sudo apt-get install paper-icon-theme
   # set the icon theme
   gsettings set org.gnome.desktop.interface icon-theme "Paper"
